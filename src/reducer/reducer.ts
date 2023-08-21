@@ -8,6 +8,8 @@ interface actionInterface {
 export const initialState: storeInterface = {
   allProductList: [],
   productListToShow: [],
+  limitPerPage: 20,
+  pageNumber: 1,
 };
 
 export const rootReducer = (
@@ -20,6 +22,12 @@ export const rootReducer = (
     }
     case actionTypes.SET_PRODUCT_LIST_TO_SHOW: {
       return { ...store, productListToShow: action.payload };
+    }
+    case actionTypes.SET_LIMIT_PER_PAGE: {
+      return { ...store, limitPerPage: action.payload };
+    }
+    case actionTypes.SET_PAGE_NUMBER: {
+      return { ...store, pageNumber: action.payload };
     }
     default: {
       return store;

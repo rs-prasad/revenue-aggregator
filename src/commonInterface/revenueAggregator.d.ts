@@ -13,4 +13,6 @@ interface branchInfoInterface {
 interface storeInterface {
   allProductList: productInfoInterface[];
   productListToShow: productInfoInterface[];
+  limitPerPage: number;
+  pageNumber: number;
 }

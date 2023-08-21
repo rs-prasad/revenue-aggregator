@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import RevenueAggregator from "./screen/revenueAggregator/RevenueAggregator";
-import ContextAPI from "./ContextApI";
+import ContextAPI from "./ContextAPI";
 
 function App() {
   return (

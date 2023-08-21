@@ -1,0 +1,25 @@
+.searchComponent {
+  padding-bottom: 10px;
+}
+
+.searchComponent input {
+  padding: 5px;
+  border: 1px solid #c7c7c7;
+  border-radius: 2px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 30px;
+  font-size: 15px;
+  font-weight: 500;
+  max-width: 300px;
+}
+
+.searchComponent input::placeholder {
+  color: #8d8d8d;
+  font-size: 14px;
+}
+
+.searchComponent input:focus {
+  border-color: #0676eebc;
+  outline: none;
+}

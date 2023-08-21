@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useGlobalContext } from "../../ContextApI";
+import { useGlobalContext } from "../../ContextAPI";
 import {
   getAggregateProductDataFunc,
   getTotalRevenueFunc,
+  createNumberArrayFunc,
 } from "./revenueAggregator.func";
 import {
   setAllProductInfoList,
   setProductListToShow,
+  setPageNumber,
 } from "../../reducer/action";
 import { debounce } from "../../utils";
-import RevenueTable from "../../components/modular/RevenueTable";
-import SearchComponent from "../../components/generic/searchComponent/SearchComponent";
+import RevenueTable from "../../components/modular/RevenueTable/RevenueTable";
+import SearchComponent from "../../components/searchComponent/SearchComponent";
 import "./RevenueAggregator.css";
 // json data
 import branch1Data from "../../jsonData/branch1.json";
@@ -37,6 +39,7 @@ const RevenueAggregator = () => {
 
   useEffect(() => {
     setTotalRevenue(getTotalRevenueFunc(store.productListToShow));
+    dispatch(setPageNumber(1));
   }, [store.productListToShow]);
 
   useEffect(() => {
@@ -46,6 +49,10 @@ const RevenueAggregator = () => {
   /*****************************  handlers  *****************************/
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilterText(event.target.value);
+  };
+
+  const handlePageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setPageNumber(event.target.value as never as number));
   };
 
   /*****************************  functions  *****************************/
@@ -72,6 +79,22 @@ const RevenueAggregator = () => {
             handleChange={handleFilterChange}
             placeholder="Filter by name"
           />
+          <div className="page-selection">
+            <label htmlFor="pageSelect">Page</label>
+            <select
+              id="pageSelect"
+              onChange={handlePageChange}
+              value={store.pageNumber}
+            >
+              {createNumberArrayFunc(
+                Math.ceil(store.productListToShow.length / store.limitPerPage)
+              ).map((item, index) => (
+                <option key={index} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="productTable">
           <RevenueTable

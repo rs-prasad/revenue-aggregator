@@ -35,3 +35,11 @@ export const getTotalRevenueFunc = (productList: productInfoInterface[]) => {
   });
   return total;
 };
+
+export const createNumberArrayFunc = (n: number) => {
+  const numberArray = [];
+  for (let i = 1; i <= n; i++) {
+    numberArray.push(i);
+  }
+  return numberArray;
+};

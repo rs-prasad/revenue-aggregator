@@ -1,4 +1,5 @@
 import React from "react";
+import "./SearchComponent.css";
 
 interface propsInterface {
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
