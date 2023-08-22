@@ -3,7 +3,6 @@ import { useGlobalContext } from "../../ContextAPI";
 import {
   getAggregateProductDataFunc,
   getTotalRevenueFunc,
-  createNumberArrayFunc,
 } from "./revenueAggregator.func";
 import {
   setAllProductInfoList,
@@ -11,8 +10,9 @@ import {
   setPageNumber,
 } from "../../reducer/action";
 import { debounce } from "../../utils";
-import RevenueTable from "../../components/modular/RevenueTable/RevenueTable";
+import RevenueTable from "../../components/RevenueTable/RevenueTable";
 import SearchComponent from "../../components/searchComponent/SearchComponent";
+import SelectComponent from "../../components/selectComponent/SelectComponent";
 import "./RevenueAggregator.css";
 // json data
 import branch1Data from "../../jsonData/branch1.json";
@@ -62,7 +62,7 @@ const RevenueAggregator = () => {
   ) {
     if (filterText === "") dispatch(setProductListToShow(allProductList));
     const filteredList = allProductList.filter((item) =>
-      item.name.toLowerCase().includes(filterText)
+      item.name.toLowerCase().includes(filterText.toLowerCase())
     );
     dispatch(setProductListToShow(filteredList));
   }
@@ -79,22 +79,12 @@ const RevenueAggregator = () => {
             handleChange={handleFilterChange}
             placeholder="Filter by name"
           />
-          <div className="page-selection">
-            <label htmlFor="pageSelect">Page</label>
-            <select
-              id="pageSelect"
-              onChange={handlePageChange}
-              value={store.pageNumber}
-            >
-              {createNumberArrayFunc(
-                Math.ceil(store.productListToShow.length / store.limitPerPage)
-              ).map((item, index) => (
-                <option key={index} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </div>
+          <SelectComponent
+            handlePageChange={handlePageChange}
+            pageNumber={store.pageNumber}
+            limit={store.limitPerPage}
+            productList={store.productListToShow}
+          />
         </div>
         <div className="productTable">
           <RevenueTable

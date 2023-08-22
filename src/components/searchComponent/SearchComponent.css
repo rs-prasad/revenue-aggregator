@@ -1,5 +1,6 @@
 .searchComponent {
   padding-bottom: 10px;
+  flex: 1;
 }
 
 .searchComponent input {

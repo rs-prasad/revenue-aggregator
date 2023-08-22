@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./RevenueTable.css";
-import { useGlobalContext } from "../../../ContextAPI";
-import { setLimitPerPage } from "../../../reducer/action";
+import { useGlobalContext } from "../../ContextAPI";
+import { setLimitPerPage } from "../../reducer/action";
 
 interface propsInterface {
   productList: productInfoInterface[];
@@ -17,7 +17,9 @@ const RevenueTable = (props: propsInterface) => {
 
     const mainTableRect = mainTable.getBoundingClientRect();
     const rowRect = row.getBoundingClientRect();
-    const limit = (window.innerHeight - mainTableRect.top) / rowRect.height - 2;
+    const limit = Math.ceil(
+      (window.innerHeight - mainTableRect.top) / rowRect.height - 3
+    );
     dispatch(setLimitPerPage(limit));
   }, []);
 
@@ -40,8 +42,8 @@ const RevenueTable = (props: propsInterface) => {
               (store.pageNumber - 1) * store.limitPerPage,
               store.pageNumber * store.limitPerPage
             )
-            .map((item) => (
-              <tr>
+            .map((item, index) => (
+              <tr key={index}>
                 <td>{item.name}</td>
                 <td className="revenue__cell">
                   {(item.sold * item.unitPrice).toFixed(2)}
@@ -49,7 +51,10 @@ const RevenueTable = (props: propsInterface) => {
               </tr>
             ))}
           {props.productList.length === 0 && (
-            <tr className="notFound">No product found</tr>
+            <tr>
+              <td className="notFound">No&nbsp;</td>
+              <td>Data</td>
+            </tr>
           )}
           <tr className="totalRevenue">
             <td>Total</td>
